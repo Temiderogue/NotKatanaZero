@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Ground
   - BlockGenerator
+  - Point
+  - FilledPoint
+  - EmptyPoint
   layers:
   - Default
   - TransparentFX

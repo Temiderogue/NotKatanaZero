@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class GameBoundary : MonoBehaviour
 {
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D other)
     {
-        if (collision.tag == "Block")
+        if (other.tag == "Ground")
         {
-            Destroy(collision);
+            Destroy(other.gameObject);
         }
     }
 }

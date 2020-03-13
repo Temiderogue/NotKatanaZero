@@ -4,22 +4,40 @@ using UnityEngine;
 
 public class BlockGenerator : MonoBehaviour
 {
-    [SerializeField] private GameObject _block;
+    [SerializeField] private GameObject _block, _score;
 
     [SerializeField] private float _nextLaunch, _minDelay, _maxDelay;
 
     public float BlockSpeed;
+    private float _randomTime, _randomPositionY, _randomNum;
 
-    void Update()
+    private int positionX = 1500;
+    private void Start()
     {
-        if (Time.time > _nextLaunch)
+        StartCoroutine("Spawn"); 
+    }
+    void FixedUpdate()
+    {
+        BlockSpeed += 0.00002f;
+    }
+
+
+    private IEnumerator Spawn()
+    {
+        _randomNum = Random.Range(1, 10);
+        _randomTime = Random.Range(1f, 2f);
+        _randomPositionY = Random.Range(-450, 150);
+        Vector2 _position = new Vector2(positionX, _randomPositionY);
+        
+        Instantiate(_block, _position, Quaternion.identity);
+        if (_randomNum > 7)
         {
-            Vector2 _position = new Vector2(20, Random.Range(-4, 3));
-            Instantiate(_block, _position, Quaternion.identity);
-
-            _nextLaunch = Time.time + Random.Range(_minDelay, _maxDelay);
+            _position.y += 50;
+            Instantiate(_score, _position, Quaternion.identity);
         }
+        
 
-        BlockSpeed += 0.000001f;
+        yield return new WaitForSeconds(_randomTime);
+        StartCoroutine("Spawn");
     }
 }
